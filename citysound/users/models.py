@@ -4,6 +4,7 @@ from typing import ClassVar
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField
 from django.db.models import EmailField
+from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
@@ -23,6 +24,13 @@ class User(AbstractUser):
     last_name = None  # type: ignore[assignment]
     email = EmailField(_("email address"), unique=True)
     username = None  # type: ignore[assignment]
+    biography = models.TextField(blank=True)
+    picture = models.ImageField(
+        "profile picture",
+        upload_to="users/pictures/",
+        blank=True,
+        null=True,
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

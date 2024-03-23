@@ -1,3 +1,70 @@
 {% extends "base.html" %}
+{% block title %}
+  City Sound    
+{% endblock title %}
+{% block content %}
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          Welcome to City Sound
+        </h1>
+        <p class="hero-description">
+          City Sound is an app designed to offer users the experience of exploring a city at their own pace. 
+          The app provides audio guides for different points of interest in the city. 
+          Users can listen to the audio guides while walking around the city, 
+          learning about the history and culture of the places they visit.
+        </p>
+        <p class="hero-description">
+          City Sound is available for download on the App Store and Google Play. 
+          Download the app today and start exploring your city with City Sound!
+        </p>
+        <div class="hero-buttons">
+          <a href="#" class="btn btn-primary">Download on the App Store</a>
+          <a href="#" class="btn btn-secondary">Get it on Google Play</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <section class="popular-tours">
+    <div class="container">
+      <h2>Some of Our Popular Tours</h2>
+      <div class="tour-grid">
+        <div class="tour-item">
+          <img src="https://imagenes.20minutos.es/files/image_1920_1080/uploads/imagenes/2023/01/24/istock-1297090032.jpeg" alt="Paris">
+          <h3>Paris Tour</h3>
+        </div>
+        <div class="tour-item">
+          <img src="https://imagenes.20minutos.es/files/image_1920_1080/uploads/imagenes/2023/01/24/istock-1297090032.jpeg" alt="Madrid">
+          <h3>Madrid Tour</h3>
+        </div>
+        <div class="tour-item">
+          <img src="https://imagenes.20minutos.es/files/image_1920_1080/uploads/imagenes/2023/01/24/istock-1297090032.jpeg" alt="Budapest">
+          <h3>Budapest Tour</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock content %}
 
+{% block styles %}
+  <style>
+    .tour-grid {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .tour-item {
+      width: 30%;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .tour-item img {
+      width: 30%;
+      height: auto;
+      display: block;
+    }
+  </style>
+{% endblock styles %}
