@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from citysound.tours.models import Tour, Stop
+from citysound.tours.models import Tour, Stop, Comment
 
 class StopSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,10 +18,15 @@ class TourSerializer(serializers.ModelSerializer[Tour]):
         
 
     def get_created_by(self, obj):
-        return obj.created_by.name
+        return obj.created_by.id
     
 class StopSerializer(serializers.ModelSerializer[Stop]):
     """Stop serializer."""
     class Meta:
         model = Stop
         fields = ('id', 'name', 'location_latitude', 'location_longitude', 'audio', 'image', 'description')
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('id', 'user', 'tour', 'text', 'created_at')

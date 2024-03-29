@@ -7,10 +7,10 @@ from rest_framework.permissions import IsAuthenticated
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
-from citysound.tours.models import Tour, Stop
+from citysound.tours.models import Tour, Stop, Comment
 from citysound.users.models import User
 
-from .serializers import TourSerializer, StopSerializer
+from .serializers import TourSerializer, StopSerializer, CommentSerializer
 
 class TourViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
     serializer_class = TourSerializer
@@ -45,5 +45,17 @@ class TourStopViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
             queryset = Stop.objects.filter(tour_id=tour_id).order_by('name')
         else:
             queryset = Stop.objects.none()
+        return queryset
+    
+class TourCommentViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        tour_id = self.kwargs.get('tour_id')
+        if tour_id is not None:
+            queryset = Comment.objects.filter(tour_id=tour_id).order_by('-created_at')
+        else:
+            queryset = Comment.objects.none()
         return queryset
     

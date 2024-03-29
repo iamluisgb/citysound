@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Models
-from .models import Tour, Stop
+from .models import Tour, Stop, Comment
 
 
 @admin.register(Tour)
@@ -42,3 +42,14 @@ class StopAdmin(admin.ModelAdmin):
     )
 
     list_filter = (TourStopFilter,)
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    """Comment admin."""
+    list_display = (
+        'user',
+        'tour',
+        'text',
+        'created_at',
+    )
+    list_filter = ('user', 'tour')
