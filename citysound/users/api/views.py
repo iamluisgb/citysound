@@ -1,3 +1,5 @@
+from dj_rest_auth.registration.views import RegisterView
+
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin
@@ -29,3 +31,16 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
     def me(self, request):
         serializer = UserSerializer(request.user, context={"request": request})
         return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+
+
+class CustomRegisterView(RegisterView):
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            if 'name' in request.data:
+                serializer.validated_data['name'] = request.data['name']
+            user = self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(self.get_response_data(user), status=status.HTTP_201_CREATED, headers=headers)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -7,10 +7,12 @@ from django.urls import include
 from django.urls import path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
-from dj_rest_auth.registration.views import RegisterView
+#from dj_rest_auth.registration.views import RegisterView
 from drf_spectacular.views import SpectacularAPIView
 from drf_spectacular.views import SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
+
+from citysound.users.api.views import  CustomRegisterView
 
 
 urlpatterns = [
@@ -41,7 +43,7 @@ urlpatterns += [
     # DRF auth token
     path("auth-token/", obtain_auth_token),
     # Rest register
-    path("register/", RegisterView.as_view(), name="rest_register"),
+    path("register/", CustomRegisterView.as_view(), name="rest_register"),
     path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"),
     path(
         "api/docs/",
