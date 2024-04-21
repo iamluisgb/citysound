@@ -18,14 +18,14 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_field = "pk"
-    permission_classes = [IsAuthenticated] 
+    permission_classes = [IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         """User only can update his/her own profile."""
         if request.user.pk != int(kwargs["pk"]):
             return Response(status=status.HTTP_403_FORBIDDEN)
         return super().update(request, *args, **kwargs)
-        
+
 
     @action(detail=False)
     def me(self, request):

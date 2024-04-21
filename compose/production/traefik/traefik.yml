@@ -31,7 +31,7 @@ certificatesResolvers:
 http:
   routers:
     web-secure-router:
-      rule: 'Host(`app.citysound.com`)'
+      rule: 'Host(`cristinanietoromero.com`) || Host(`www.cristinanietoromero.com`)'
       entryPoints:
         - web-secure
       middlewares:
@@ -41,8 +41,18 @@ http:
         # https://doc.traefik.io/traefik/routing/routers/#certresolver
         certResolver: letsencrypt
 
+    web-media-router:
+      rule: '(Host(`cristinanietoromero.com`) || Host(`www.cristinanietoromero.com`)) && PathPrefix(`/media/`)'
+      entryPoints:
+        - web-secure
+      middlewares:
+        - csrf
+      service: django-media
+      tls:
+        certResolver: letsencrypt
+
     flower-secure-router:
-      rule: 'Host(`app.citysound.com`)'
+      rule: 'Host(`cristinanietoromero.com`)'
       entryPoints:
         - flower
       service: flower
@@ -62,6 +72,11 @@ http:
       loadBalancer:
         servers:
           - url: http://django:5000
+
+    django-media:
+      loadBalancer:
+        servers:
+          - url: http://nginx:80
 
     flower:
       loadBalancer:
